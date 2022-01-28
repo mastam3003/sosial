@@ -1008,7 +1008,7 @@ blockquote {
   -webkit-animation-delay: 1200ms;
           animation-delay: 1200ms; }
 
-@-webkit-keyframes animLeft {
+@webkit-keyframes animLeft {
   from {
     opacity: 0;
     -webkit-transform: translate3d(50px, 0, 0);

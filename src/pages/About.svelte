@@ -1,6 +1,6 @@
 <script>
-    import Header from '../components/Header.svelte'
-    import Footer from '../components/Footer.svelte'
+    import Header from "../components/Header.svelte"
+    import Footer from "../components/Footer.svelte"
 
 </script>
 
@@ -39,7 +39,8 @@
               <a
                 href="https://www.youtube.com/watch?v=Tb1HsAGy-ls"
                 class="xs-video-popup xs-round-btn">
-                <i class="fa fa-play" />
+                <i class="fa fa-play">
+                </i>
               </a>
             </div>
             <!-- .xs-video-popup-content end -->

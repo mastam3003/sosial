@@ -41,8 +41,6 @@
 }
 </script>
 
-
-
 <Header />
 <!-- welcome section -->
 <!--breadcumb start here-->
@@ -89,7 +87,7 @@
                     placeholder="Enter Your Name....." />
                   <div class="input-group-append">
                     <div class="input-group-text">
-                      <i class="fa fa-user" />
+                      <i class="fa fa-user"></i>
                     </div>
                   </div>
                 </div>
@@ -103,7 +101,7 @@
                     placeholder="Enter Your Email....." />
                   <div class="input-group-append">
                     <div class="input-group-text">
-                      <i class="fa fa-envelope-o" />
+                      <i class="fa fa-envelope-o"></i>
                     </div>
                   </div>
                 </div>
@@ -118,7 +116,7 @@
                     rows="10" />
                   <div class="input-group-append">
                     <div class="input-group-text">
-                      <i class="fa fa-pencil" />
+                      <i class="fa fa-pencil"></i>
                     </div>
                   </div>
                 </div>

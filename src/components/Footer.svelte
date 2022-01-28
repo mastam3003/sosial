@@ -10,9 +10,9 @@
 						<p>CharityPress online and raise money for charity and causes you’re passionate about.
 							CharityPress is an innovative, cost-effective online.</p>
 						<ul class="xs-social-list-v2">
-							<li><a href="" class="color-facebook"><i class="fa fa-facebook" /></a></li>
-							<li><a href="" class="color-twitter"><i class="fa fa-twitter" /></a></li>
-							<li><a href="" class="color-dribbble"><i class="fa fa-dribbble" /></a></li>
+							<li><a href="" class="color-facebook"><i class="fa fa-facebook"/></a></li>
+							<li><a href="" class="color-twitter"><i class="fa fa-twitter"/></a></li>
+							<li><a href="" class="color-dribbble"><i class="fa fa-dribbble"/></a></li>
 							<!-- svelte-ignore a11y-invalid-attribute -->
 							<li><a href="" class="color-pinterest"><i class="fa fa-pinterest" /></a></li>
 						</ul>

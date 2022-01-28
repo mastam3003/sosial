@@ -1,4 +1,5 @@
 <script>
+	import { onMount, onDestroy, beforeUpdate, afterUpdate } from "svelte";
 	import Modal from './Modal.svelte';
     export let charities;
 	let isModalOpen = false;
@@ -41,7 +42,9 @@
 		display:block;
 		background-color: rgba(0, 0, 0, 0.45);
 	}
-
+	.pledged {
+		margin-right: 1.5em;
+	}
 </style>
 
 	<!-- popularCauses section -->
@@ -53,11 +56,12 @@
 					<span class="xs-separetor dashed"></span>
 					<p>FundPress has built a platform focused on aiding entrepreneurs, startups, and <br> companies
 						raise capital from anyone.</p>
-				</div><!-- .xs-heading-title END -->
-			</div><!-- .row end -->
-			 {#if charities !== undefined}
-			 {#each charities as charity }
+				</div>
+				<!-- .xs-heading-title END -->
+			</div>
+			<!-- .row end -->
 			<div class="row">
+				{#each charities as charity}
 				<div class="col-lg-4 col-md-6">
 					{#if isModalOpen === true}
 					<Modal>
@@ -111,8 +115,15 @@
 
 							<div class="xs-skill-bar">
 								<div class="xs-skill-track">
-									<p><span class="number-percentage-count number-percentage" data-value="90"
-											data-animation-duration="3500">{calculateFunded(charity.pledged, charity.target)}</span>%</p>
+									<p>
+										<span 
+										class="number-percentage-count number-percentage" 
+										data-value="90"
+										data-animation-duration="3500">
+										{calculateFunded(charity.pledged, charity.target)}
+										</span>
+										%
+									</p>
 								</div>
 							</div>
 						</div><!-- .xs-item-header END -->
@@ -123,11 +134,25 @@
 
 							<a href="#" class="xs-post-title xs-mb-30">{charity.title}</a>
 
-							<ul class="xs-list-with-content" >
-								<li>{formatCurency(charity.pledged)}<span>Pledged</span></li>
-								<li><span class="number-percentage-count number-percentage" data-value="90"
-										data-animation-duration="3500">{calculateFunded(charity.pledged, charity.target)}</span>% <span>Funded</span></li>
-								<li>{calculateDaysRemaining(charity.date_end)}<span>Days to go</span></li>
+							<ul class="xs-list-with-content">
+							  <li class = "pledged">
+								{formatCurency(charity.pledged)}
+									<span>Pledged</span>
+								</li>
+								<li>
+									<span 
+									class="number-percentage-count number-percentage" 
+									data-value="90"
+									data-animation-duration="3500">
+									{calculateFunded(charity.pledged, charity.target)}
+									</span>
+									%
+									<span>Funded</span>
+								</li>
+								<li>
+								{calculateDaysRemaining(charity.date_end)}
+								<span>Days to go</span>
+								</li>
 							</ul>
 
 							<span class="xs-separetor"></span>
@@ -143,19 +168,23 @@
 
 							<span class="xs-separetor"></span>
 
-							<button  href="#" on:click={handleButton} data-toggle="modal" data-target="#exampleModal"
+							<a  
+								href="/donation/{charity.id}"  
+								data-toggle="modal" 
+								data-target="#exampleModal"
 								class="btn btn-primary btn-block">
 								Donate This Cause
-							</button>
+							</a>
 						</div><!-- .xs-item-content END -->
 					</div><!-- .xs-popular-item END -->
 				</div>
+				{/each}
 			  </div>
-			 {/each}
-			{/if}
 			<!-- .row end -->
-		</div><!-- .container end -->
-	</section><!-- End popularCauses section -->
+		</div>
+		<!-- .container end -->
+	</section>
+	<!-- End popularCauses section -->
 
 
     <!-- <div>

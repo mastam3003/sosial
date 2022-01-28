@@ -13,8 +13,15 @@
 	router("/", () => (page = Home));
 	router("/about", () => (page = About));
 	router("/contact",() => (page = Contact));
-	router("/donation", () => (page = Donation));
+	router("/donation/:id", (ctx, next) => {
+		params =ctx.params;
+		next();
+	}, 
+	() => (page = Donation)
+	);
+
 	router('/*', () => (page = NotFound));
+
 	
 	
 
