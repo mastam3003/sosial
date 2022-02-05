@@ -528,5 +528,4 @@ function init() {
 		title: 'Snazzy!'
 	});
 }
-
 })(jQuery);

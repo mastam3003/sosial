@@ -1,6 +1,7 @@
 <script>
 	import { onMount, onDestroy, beforeUpdate, afterUpdate } from "svelte";
-	import Modal from './Modal.svelte';
+	import Modal from "./Modal.svelte";
+
     export let charities;
 	let isModalOpen = false;
 
@@ -101,7 +102,7 @@
 									</form>
 								</div>
 								<div class="modal-footer">
-									<button type="button" class="btn btn-primary">Continue</button>
+								 	<button type="button" class="btn btn-primary">Continue</button>
 								</div>
 							</div>
 						</div>
@@ -111,8 +112,7 @@
 					<div class="xs-popular-item xs-box-shadow">
 						<div class="xs-item-header">
 
-							<img src="assets/images/causes/causes_4.png" alt="">
-
+							<img src={charity.thumbnail} alt="">
 							<div class="xs-skill-bar">
 								<div class="xs-skill-track">
 									<p>
@@ -179,7 +179,7 @@
 					</div><!-- .xs-popular-item END -->
 				</div>
 				{/each}
-			  </div>
+			</div>
 			<!-- .row end -->
 		</div>
 		<!-- .container end -->
@@ -191,8 +191,8 @@
     <h2>Daftar Charity</h2>
     {#if charities !== undefined}
         <ul>
-            {#each charities as charity }
-            <li>{charity.title}-{charity.category}</li>
+            {#each charities as charity}
+            	<li>{charity.title} - {charity.category}</li>
             {/each}
         </ul>
     {:else}
