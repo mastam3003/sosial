@@ -1,42 +1,62 @@
 <script>
+	import { charity, getCharity } from "../stores/data.js";
+	import { params } from "../stores/pages.js";
 	import router from 'page';
-    import Header from '../components/Header.svelte';
+	import Header from '../components/Header.svelte';
     import Footer from '../components/Footer.svelte';
 	import Loader from '../components/Loader.svelte';
 
-	export let params;
-	let charity, amount, name, email, agree = false;
-	let data = getCharity(params.id);
+	let  amount = 0, 
+	name, 
+	email, 
+	agree = false,
+	contribute = 0 ;
 
-	async function getCharity(id) {
-		const res = await fetch(
-			`https://charity-api-bwa.herokuapp.com/charities/${id}`
-			);
-		return res.json();
+	$: if($charity) {
+		contribute = Math.floor((parseInt(amount) / $charity.target) *100);
 	}
+
+	getCharity($params.id);
+
+
 
 	function handleButtonClick() {
 		console.log("Button click");
 	}
 
 	async function handleForm(event) {
-		charity.pledged = charity.pledged + parseInt(amount);
+		agree = false;                                                                                                                                                                                    
+		const newData = await getCharity ($params.id);
+		newData.pledged = newData.pledged + parseInt (amount);
 		try {
-			const res = await fetch(`https://charity-api-bwa.herokuapp.com/charities/${params.id}`,{
+			const res = await fetch(`https://charity-api-bwa.herokuapp.com/charities/${$params.id}`,
+		{
 		  method: 'PUT',
 		  headers: {
-			  'content-type': 'application/json'
+			  "content-type": "application/json",
 		  },
-		  body: JSON.stringify(charity)
+		  body: JSON.stringify(newData),
+		}
+	);
+	const resMid = await fetch('/.netlify/functions/payment', {
+		method: "POST",
+		headers: {
+			"content-type": "application/json",
+		},
+		body: JSON.stringify({
+			id: $params.id,
+			amaount: parseInt(amount),
+			name,
+			email,
+		}),
 	});
-	console.log(res);
-	//redirection
-	router.redirect('/success');
+	const midtransData = await resMid.json();
+	console.log(midtransData);
+	windows.location.href = midtransData.url;
 	} catch(err) {
 		console.log(err);
 	}
-}
-
+	}
 </script>
 
 <style>
@@ -57,16 +77,16 @@
 
 <!-- welcome section -->
 	<!--breadcumb start here-->
-	{#await data}
+	{#if !$charity}
 	<Loader />
-	{:then charity}
+	{:else }
 	<section class="xs-banner-inner-section parallax-window" 
 	style="background-image:url('/assets/images/bantu.jpg')">
 	<div class="xs-black-overlay"></div>
 	<div class="container">
 	<div class="color-white xs-inner-banner-content">
-	<h2>Donate Now</h2>
-	<p>{charity.title}</p>
+	<h2>Halaman Donasi</h2>
+	<p>{$charity.title}</p>
 	<ul class="xs-breadcumb">
 	<li class="badge badge-pill badge-primary">
 	<a href="/" class="color-white">Home /</a> Donate
@@ -81,16 +101,16 @@
 	<div class="container">
 	<div class="row">
 	<div class="col-lg-6">
-	<div class="xs-donation-form-images"><img src={charity.thumbnail} class="img-responsive" alt=""></div>
+	<div class="xs-donation-form-images"><img src={$charity.thumbnail} class="img-responsive" alt=""></div>
 	</div>
 	<div class="col-lg-6">
 	<div class="xs-donation-form-wraper">
 	<div class="xs-heading xs-mb-30">
-	<h2 class="xs-title">{charity.title}</h2>
+	<h2 class="xs-title">{$charity.title}</h2>
 	<p class="small">To learn more about make donate charity
 	with us visit our "<span class="color-green">Contact
 	us</span>" site. By calling <span class=
-	"color-green">+62 857 0213 4368</span>.</p><span class=
+	"color-green">+62 857 0213 4368</span>.</p><h5>Youre donation will be contributing <strong>{contribute}%</strong>of total current donation.</h5><span class=
 	"xs-separetor v2"></span>
 	</div><!-- .xs-heading end -->
 	<form 
@@ -102,7 +122,7 @@
 	name="xs-donation-form">
 	<div class="xs-input-group">
 	<label for="xs-donate-name">
-		Donation Amount 
+		Besaran Donasi 
 		<span class="color-light-red">**</span>
 	</label> 
 	<input 
@@ -117,7 +137,7 @@
 <!-- .xs-input-group END -->
 <div class="xs-input-group">
 	<label for="xs-doante-name">
-		Your Name
+		Nama 
 		<span class="color-light-red">**</span>
 	</label>
 	<input
@@ -131,7 +151,7 @@
 </div>
 <div class="xs-input-group">
 	<label for="xs-donate-email">
-		Your Email
+		Email
 		<span class="color-light-red">**</span>
 	</label>
 	<input
@@ -147,7 +167,7 @@
 	<input type="checkbox" name="agree" id="xs-donate-agree" 
 	bind:checked={agree}/>
 	<label for="xs-donate-agree"> 
-		I Agree
+		Siap berdonasi
 		<span class="color-light-red">**</span>
 	</label>
 </div>
@@ -168,7 +188,7 @@
 	</div><!-- .container end -->
 	</section><!-- End donation form section -->
 	</main>
-	{/await}
+	{/if}
 
 
 

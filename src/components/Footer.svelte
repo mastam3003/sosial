@@ -36,7 +36,8 @@
 							<li><i class="fa fa-phone" />(800) 123.456.7890 (800) 123.456.7890 +00 99 88 5647</li>
 							<li><i class="fa fa-envelope-o" /><a
 									href="mailto:yourname@domain.com">yourname@domain.com</a></li>
-						</ul><!-- .xs-list-with-icon END -->
+						</ul>
+						<!-- .xs-list-with-icon END -->
 					</div>
 				</div>
 			</div>

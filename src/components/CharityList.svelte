@@ -1,8 +1,10 @@
 <script>
-  import { onMount, onDestroy, beforeUpdate, afterUpdate } from "svelte";
-  import Modal from './Modal.svelte'
+  import {fade, slide, fly} from 'svelte/transition'; 
+  import { charities } from "../stores/data.js";
+  import Modal from "./Modal.svelte";
+  import Loader from "./Loader.svelte";
 
-  export let charities;
+
   let isModalOpen = false;
 
   function calculateFunded(pledged, target) {
@@ -13,7 +15,7 @@
 		return nominal.toLocaleString("id-ID",{
 			style: "currency",
 			currency: "IDR",
-		} );
+		});
 	}
 
 	function calculateDaysRemaining(date_end) {
@@ -58,9 +60,9 @@ function handleButton() {
       </div><!-- .xs-heading-title END -->
     </div><!-- .row end -->
     <div class="row">
-      {#each charities as charity}
-      <div class="col-lg-4 col-md-6">
-      {#if isModalOpen ===true}
+      {#each $charities as charity}
+      <div class="col-lg-4 col-md-6" in:slide= {{delay: 1000}} out:fade={{delay: 1000}}>
+      {#if isModalOpen === true}
         <Modal>
            <!-- modal goes here a -->
         <!-- Modal -->
@@ -110,10 +112,11 @@ function handleButton() {
         <div class="xs-popular-item xs-box-shadow">
           <div class="xs-item-header">
 
-            <img src={charity.thumbnail} alt="">
+            <img src={charity.thumbnail} alt="" />
+
             <div class="xs-skill-bar">
-              <div class="xs-skill-track">
-                <p><span class="number-percentage-count number-percentage" data-value="90"
+              <div class="xs-skill-track" style="width:{calculateFunded(charity.pledged, charity.target)}%">
+                <p in:fly= {{ delay: 3500, x: -100}} style="left: 100%"><span class="number-percentage-count number-percentage" data-value="90"
                     data-animation-duration="3500">{calculateFunded(charity.pledged, charity.target)}</span>%</p>
               </div>
             </div>
@@ -154,13 +157,20 @@ function handleButton() {
               class="btn btn-primary btn-block">
               Donate This Cause
           </a>
-          </div><!-- .xs-item-content END -->
-        </div><!-- .xs-popular-item END -->
+          </div>
+          <!-- .xs-item-content END -->
+        </div>
+        <!-- .xs-popular-item END -->
       </div>
+      {:else}
+      <Loader />
       {/each}
-    </div><!-- .row end -->
-  </div><!-- .container end -->
-</section><!-- End popularCauses section -->
+    </div>
+    <!-- .row end -->
+  </div>
+  <!-- .container end -->
+</section>
+<!-- End popularCauses section -->
 
 
 <!-- 
